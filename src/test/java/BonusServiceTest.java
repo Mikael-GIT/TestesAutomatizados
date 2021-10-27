@@ -1,4 +1,8 @@
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.fail;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -13,9 +17,17 @@ public class BonusServiceTest {
     @Test
     public void bonusDeveriaSerZeroParaFuncionarioComSalarioMuitoAlto() {
         BonusService service = new BonusService();
-        BigDecimal bonus = service.calcularBonus(new Funcionario("Rodrigo", LocalDate.now(), new BigDecimal("25000")));
-
-        Assert.assertEquals(new BigDecimal("0.00"), bonus);
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularBonus(new Funcionario("Rodrigo", LocalDate.now(), new BigDecimal("25000"))));
+        // try {
+        // service.calcularBonus(new Funcionario("Rodrigo", LocalDate.now(), new
+        // BigDecimal("4000")));
+        // Se ele passar dessa linhaa, tem que chamar o metodo fail do junit
+        // fail();
+        // } catch (Exception e) {
+        // assertEquals("Funcionário com salário maior do que mil reais não pode receber
+        // bônus.", e.getMessage());
+        // }
     }
 
     @Test
